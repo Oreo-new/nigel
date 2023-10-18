@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/home', [PageController::class, 'home'])->name('home');
+Route::get('/more-videos', [PageController::class, 'more'])->name('more-videos');
+Route::get('/{slug}', [PageController::class, 'page'])->name('subpage');

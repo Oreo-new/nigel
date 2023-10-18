@@ -2,7 +2,7 @@
     <div class="w-full">
         <x-header />
        
-        <div class="main pt-16">
+        <div class="main pt-6">
             <div class="flex pl-5">
                 <div class="home-image w-5/12">
                    <img src="{{ asset('/storage/'. $page->image) }}" alt="Nigel Southway Book - Take Back Manufacturing" class="w-full">

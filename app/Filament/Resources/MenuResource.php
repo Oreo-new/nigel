@@ -19,6 +19,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
 
 class MenuResource extends Resource
 {
@@ -42,6 +43,7 @@ class MenuResource extends Resource
                 TextInput::make('url')
                 ->helperText('Auto generates url after saving. You may put a unique url or leave it blank.'),
                 TextInput::make('order')->default($count)->nullable(),
+                Textarea::make('svg')->nullable()->helperText('Please input a svg icon'),
                 Checkbox::make('new_window')
                     ->default(false)
                     ->autofocus()

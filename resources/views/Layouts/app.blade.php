@@ -28,7 +28,7 @@
             <!-- Page Content -->
             <main>
                 <div class="container mx-auto flex">
-                <x-aside />
+                <x-sidebar />
                 <div class="w-4/5 px-5 flex py-5">
                     {{ $slot }}
                 </div>

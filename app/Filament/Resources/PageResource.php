@@ -52,12 +52,12 @@ class PageResource extends Resource
                                 Repeater::make('links')
                                 ->schema([
                                     TextInput::make('link_name')->label('Link Name'),
-                                    TextInput::make('url')->label('Link url')->prefix('https://'),
+                                    TextInput::make('url')->label('Link url')->helperText('Your link must start with https:// or http:://'),
                                 ])->nullable(),
                                 Repeater::make('page_icons')
                                     ->schema([
                                         FileUpload::make('icon')->nullable()->label('Upload Icon'),
-                                        TextInput::make('url')->url()->label('Link url')->prefix('https://'),
+                                        TextInput::make('url')->url()->label('Link url')->helperText('Your link must start with https:// or http:://'),
                                     ])->nullable(),
                                 ])->columns(2),
                             
