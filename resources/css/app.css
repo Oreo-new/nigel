@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;700&family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: 'Lexend Deca' !important;
+}
+
+.home .main h2 {
+    @apply text-[30px] font-bold uppercase mb-3;
+}
+.home .main p {
+    @apply text-sm leading-loose mb-4;
+}
+.breadcrumb-item::after {
+    position: absolute;
+    content: '/';
+    right: -3px;
+}
+.breadcrumb-item:last-child::after {
+    content: '';
+}

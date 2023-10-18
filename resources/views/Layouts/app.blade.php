@@ -10,7 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com"> 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;600;700&display=swap" rel="stylesheet">
+        
 
         <!-- Styles -->
         
@@ -20,14 +20,21 @@
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-serif antialiased">
+    <body class="font-serif antialiased {{ bodyClass() }}">
         
-        <div class="min-h-screen bg-gray-100">
-
+        <div class="min-h-screen bg-white">
+            {{-- <x-header /> --}}
           
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="container mx-auto flex">
+                <x-aside />
+                <div class="w-4/5 px-5 flex py-5">
+                    {{ $slot }}
+                </div>
+                </div>
+                
+                
             </main>
         </div>
 
