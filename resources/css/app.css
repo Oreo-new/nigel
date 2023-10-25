@@ -47,6 +47,58 @@ body {
   .navigation ul li.active {
     @apply bg-red-600 text-white rounded font-bold;
   }
+  .navigation ul li.active:hover a > span {
+    @apply  text-white font-bold;
+  }
   .navigation ul li.active  svg{
     @apply text-white !important;
   }
+  .main .documents p {
+    @apply text-sm text-neutral-400;
+  }
+  .about-the-author .intro > h2 {
+    @apply text-2xl font-bold mb-2;
+  }
+  .book-ordering .main a {
+    @apply text-red-600;
+  }
+  .article-intro p {
+    @apply text-sm leading-normal text-neutral-500;
+  }
+ .article-item:first-child {
+  @apply mt-0;
+ } 
+ /* .article-pagination nav {
+  @apply justify-center;
+ } */
+ .article-pagination nav > div:first-child{
+  @apply hidden;
+ }
+ .article-pagination nav > div > span,
+ .article-pagination nav > div > a{
+  @apply mx-2;
+ }
+ .article-pagination nav > div > div > p {
+  @apply mr-4;
+ }
+ 
+ .article-pagination nav > div > div > span > span > span{
+  @apply mx-1 cursor-not-allowed text-gray-400;
+ }
+
+ .article-pagination nav > div > div > span > a{
+  @apply mx-1 text-red-600;
+ }
+
+.article-intro  p > a {
+  @apply text-red-600 hover:text-red-900 transition-colors;
+ }
+ .comment-content p{
+  @apply text-sm text-neutral-500;
+ }
+  .replies p{
+  @apply text-sm text-black;
+ }
+ .reply-form > button:hover > span, .reply-form > button:hover > svg {
+  @apply hover:text-red-600 transition-colors;
+ }

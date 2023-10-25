@@ -13,12 +13,11 @@
                     @if($page->links)
                         <div class="home-buttons flex mt-16">
                             @foreach($page->links as  $item)
-                            <button class="rounded bg-red-600 text-center px-10 py-3 text-white text-sm font-bold mr-5">
-                                <a href="{{$item['url']}}">
-                                    {{$item['link_name']}}
-                                </a>
-                            </button>
-                                
+                                <button class="rounded bg-red-600 text-center px-10 py-3 text-white text-sm font-bold mr-5">
+                                    <a href="{{$item['url']}}" target="_blank">
+                                        {{$item['link_name']}}
+                                    </a>
+                                </button>
                             @endforeach
                         </div>
                     @endif

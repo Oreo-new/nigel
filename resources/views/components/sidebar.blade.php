@@ -15,9 +15,9 @@
                 @else
                 <li class="flex py-2 px-4 {{ bodyClass()  == $item->url ? 'active' : ''; }}">
                     @if($item->svg)
-                        <a href="{{$item->url}}" class="w-full flex" >{!!$item->svg!!} {{$item->name}}</a>
+                        <a href="{{'/'.$item->url}}" class="w-full flex" >{!!$item->svg!!} <span class="hover:text-red-600 transition-colors">{{$item->name}}</span></a>
                     @else   
-                        <a href="{{$item->url}}">{{$item->name}}</a>
+                        <a href="{{'/'.$item->url}}" class="hover:text-red-600 transition-colors">{{$item->name}}</a>
                     @endif
                </li>
                 @endif

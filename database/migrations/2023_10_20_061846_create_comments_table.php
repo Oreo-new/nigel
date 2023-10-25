@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Article;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('more_videos', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->longText('description')->nullable();
-            $table->mediumText('video_link');
+            $table->string('name');
+            $table->string('email');
+            $table->foreignIdFor(Article::class);
+            $table->integer('parent_id')->unsigned()->nullable();
+            $table->longText('comment');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('more_videos');
+        Schema::dropIfExists('comments');
     }
 };

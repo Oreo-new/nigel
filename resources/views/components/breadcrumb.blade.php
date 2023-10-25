@@ -4,7 +4,7 @@
         @foreach($breadcrumbs as $breadcrumb)
             <li class="breadcrumb-item text-neutral-400 text-xs uppercase px-2 relative">
                 @if($breadcrumb['url'])
-                    <a href="{{ $breadcrumb['url'] }}">{{ $breadcrumb['label'] }}</a>
+                    {{ $breadcrumb['label'] }}
                 @else
                     {{ $breadcrumb['label'] }}
                 @endif
