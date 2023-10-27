@@ -22,7 +22,7 @@
                             <div class="flex ">
                                 @foreach($page->page_icons as  $item)
                                     <a href="{{$item['url']}}" class="mr-3" target="_blank">
-                                        <img src="{{asset('storage/'.$item['icon'])}} " alt="Nigel Southway socials">
+                                        <img class="w-[54px] h-[54px]" src="{{asset('storage/'.$item['icon'])}} " alt="Nigel Southway socials">
                                     </a>
                                 @endforeach
                             </div>

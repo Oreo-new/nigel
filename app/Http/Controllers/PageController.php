@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Document;
+use App\Models\Event;
 use App\Models\MoreVideo;
 use App\Models\Page;
 use App\Models\PageArticle;
+use App\Models\Question;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -123,6 +125,32 @@ class PageController extends Controller
         ->with('sortedArticles', $sortedArticles);
         
     }
-    
+    public function survey() 
+    {
+        $page = Page::where('slug', 'survey')->firstorFail();
+        $questions = Question::all();
+        
+        return view('pages.survey')
+        ->with('page', $page)
+        ->with('questions', $questions);
+    }
+
+    public function news() 
+    {
+        $page = Page::where('slug', 'news')->firstorFail();
+        $news = DB::table('events');
+        $allnews = $news->orderBy('created_at', 'desc')->paginate(5);
+        
+        return view('pages.news')
+        ->with('page', $page)
+        ->with('allnews', $allnews);
+    }
+    public function news1($slug) 
+    {
+        
+        $article = Event::where('slug', $slug)->firstorFail();
+        
+        return view('pages.singlenews')->with('article', $article);
+    }
 
  }

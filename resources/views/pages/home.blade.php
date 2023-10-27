@@ -6,7 +6,19 @@
             <div class="flex pl-5">
                 <div class="home-image w-5/12">
                    <img src="{{ asset('/storage/'. $page->image) }}" alt="Nigel Southway Book - Take Back Manufacturing" class="w-full">
+                   @if($page->page_icons)
+                        <div class="mt-4">
+                            <div class="flex justify-center">
+                                @foreach($page->page_icons as  $item)
+                                    <a href="{{$item['url']}}" class="mr-3" target="_blank">
+                                        <img class="w-[54px] h-[54px]" src="{{asset('storage/'.$item['icon'])}} " alt="Nigel Southway socials">
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
+                
                 <div class="w-7/12">
                     {!! $page->full_text !!}
 

@@ -39,6 +39,13 @@
             </main>
         </div>
 
+        <footer class="flex mt-4 container mb-10 mx-auto">
+            <div class="w-1/5"></div>
+            <div class="w-4/5">
+                <p class="text-sm">© Copyright {{ now()->year }} <span class="text-red-600 font-bold">NIGEL SOUTHWAY</span>. All Rights Reserved.</p>
+            </div>
+            
+        </footer>
         
         @stack('modals')
         @livewireScripts

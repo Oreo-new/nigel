@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -37,8 +38,9 @@ class DocumentResource extends Resource
                         ->helperText('Auto generates url after saving. You may put a unique url or leave it blank.'),
                 ])->columns(2)->columnSpan('full'),
                 Grid::make()->schema([
+                    Textarea::make('external_link')->label('external link for pdf'),
                     FileUpload::make('pdf')->autofocus()->storeFileNamesIn('attachment_file_names')
-                    ->acceptedFileTypes(['application/pdf'])->required()->helperText('Please attach file here or Documents.'),
+                    ->acceptedFileTypes(['application/pdf'])->helperText('Please attach file here or Documents.'),
                     RichEditor::make('description'),
                 ])->columns(1)->columnSpan('full'),
             ]);
