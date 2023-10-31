@@ -9,7 +9,7 @@
             </div>
             
             <div class="mt-10 w-full flex">
-                <div class="w-9/12">
+                <div class="w-full lg:w-9/12">
                     @if(!$sortedArticles->isEmpty())
 
                         @foreach($sortedArticles  as $item)
@@ -45,7 +45,7 @@
                         
                     @endif
                 </div>
-                <div class="w-3/12">
+                <div class="hidden lg:block lg:w-3/12">
                     <x-latest-article />
                 </div>
             </div>

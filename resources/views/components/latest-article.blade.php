@@ -9,14 +9,17 @@
     @endif
 
     @if(!$groupedArticles->isEmpty())
-    <h4 class="text-xl mt-8 mb-5">Recent Post</h4>
+    <h4 class="text-xl mt-8 mb-5">Archived Post</h4>
     @foreach ($groupedArticles as $yearMonth => $articles) 
    
         @php
             list($year, $month) = explode('-', $yearMonth);
+        
+            $date = Carbon\Carbon::parse($yearMonth);
+            $fDate = $date->format('Y-F');
         @endphp
                 
-            <p class="text-red-600 hover:underline transition-all mb-3"> <a href="{{'/archived/'.$month.'-'.$year}}"> {{ $month }}  {{ $year }} </a></p>
+            <p class="text-red-600 hover:underline transition-all mb-3"> <a href="{{'/archived/'.$month.'-'.$year}}"> {{ $fDate}} </a></p>
         
         
         

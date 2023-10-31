@@ -10,6 +10,7 @@ use App\Models\MoreVideo;
 use App\Models\Page;
 use App\Models\PageArticle;
 use App\Models\Question;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,28 +19,54 @@ class PageController extends Controller
 {
     public function home() 
     {
-
         $page = Page::where('slug', 'home')->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
+        
         return view('pages.home')
         ->with('page', $page);
     }
+    public function intro()
+    {
+        $page = Page::where('slug', 'introduction-video')->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
+        return view('pages.intro')
+                ->with('page', $page);
+    }
     public function page($slug)
     {
-        $page = Page::where('slug', $slug)->firstorFail();
-        
-        if($slug == 'introduction-video') {
-            return view('pages.intro')
-                ->with('page', $page);
-        } elseif($slug == 'home'){
+       if($slug == 'home'){
             return abort(404);
         }
-        
+
+        $page = Page::where('slug', $slug)->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         return view('pages.page')
         ->with('page', $page);
     }
     public function more() 
     {
         $page = Page::where('slug', 'more-videos')->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         $videos = MoreVideo::all();
         return view('pages.more-videos')
             ->with('page', $page)
@@ -48,6 +75,12 @@ class PageController extends Controller
     public function documents() 
     {
         $page = Page::where('slug', 'documents')->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         $documents = Document::all()->sortBy("created_at");
         return view('pages.documents')
             ->with('page', $page)
@@ -56,6 +89,12 @@ class PageController extends Controller
     public function about() 
     {
         $page = Page::where('slug', 'about-the-author')->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         $document = $page->pageArticle()->first();
         return view('pages.about')
             ->with('page', $page)
@@ -64,6 +103,12 @@ class PageController extends Controller
     public function ordering() 
     {
         $page = Page::where('slug', 'book-ordering')->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         $document = $page->pageArticle()->first();
         return view('pages.ordering')
             ->with('page', $page)
@@ -72,12 +117,24 @@ class PageController extends Controller
     public function contact() 
     {
         $page = Page::where('slug', 'contact')->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         return view('pages.contact')
             ->with('page', $page);
     }
     public function articles() 
     {
         $page = Page::where('slug', 'tbm-articles')->firstorFail();
+
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         $articles = DB::table('articles');
         $latest = $articles->latest()->take(5)->get();
         $sortedArticles = $articles->join('users', 'articles.user_id', '=', 'users.id')
@@ -97,6 +154,11 @@ class PageController extends Controller
         ->where('articles.slug', $slug)
         ->select('articles.*', 'users.name as author_name', 'users.email as author_email')
         ->first();
+
+        SEOTools::setTitle($article->title);
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         $comments = Comment::where('article_id', $article->id)
         ->whereNull('parent_id')
         ->with('replies')
@@ -108,11 +170,17 @@ class PageController extends Controller
     }
     public function archive($slug) 
     {
-        $date = Carbon::createFromFormat('F-Y', $slug)->format('Y-m');
+        
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
 
-        list($year, $month) = explode('-', $date);
+        list($month, $year) = explode('-', $slug);
+
+        $parsedDate = Carbon::create($year, $month, 1);
+        $date = $parsedDate->format('Y-F');
 
         $articles = DB::table('articles');
+        
 
         $sortedArticles = $articles
         ->whereYear('created_at', '=', $year)
@@ -128,6 +196,11 @@ class PageController extends Controller
     public function survey() 
     {
         $page = Page::where('slug', 'survey')->firstorFail();
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         $questions = Question::all();
         
         return view('pages.survey')
@@ -138,6 +211,11 @@ class PageController extends Controller
     public function news() 
     {
         $page = Page::where('slug', 'news')->firstorFail();
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
         $news = DB::table('events');
         $allnews = $news->orderBy('created_at', 'desc')->paginate(5);
         
@@ -149,6 +227,9 @@ class PageController extends Controller
     {
         
         $article = Event::where('slug', $slug)->firstorFail();
+        SEOTools::setTitle($article->title);
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
         
         return view('pages.singlenews')->with('article', $article);
     }

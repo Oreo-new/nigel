@@ -41,8 +41,8 @@
                         
                     @endif
                 </div>
-                <div class="w-3/12">
-                    <p>sample</p>
+                <div class="hidden lg:block lg:w-3/12">
+                    <x-latest-article />
                 </div>
             </div>
 

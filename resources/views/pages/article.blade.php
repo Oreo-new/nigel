@@ -5,7 +5,7 @@
         <div class="main mt-4 pt-6">
             
             <div class="w-full flex">
-                <div class="w-9/12">
+                <div class="w-full lg:w-9/12">
                     @if($article)
                         <div class="article-item w-full mb-3">
                             <div class="head border-b border-gray-200">
@@ -36,7 +36,7 @@
                         </div>  
                     @endif
                 </div>
-                <div class="w-3/12">
+                <div class="hidden lg:block lg:w-3/12">
                     <x-latest-article />
                 </div>
             </div>
@@ -53,7 +53,7 @@
                             $carbonDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $originalDate);
                             $formattedDate = $carbonDate->format('F j, Y \a\t g:i a');
                         @endphp
-                        <div class="shadow p-4 my-4  w-4/6 relative">
+                        <div class="shadow p-4 my-4  w-full lg:w-4/6 relative">
                             <div class="flex items-center">
                                 <div class="bg-gray-400 mr-3">
                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 p2">
@@ -143,7 +143,7 @@
 
                  <p class="text-sm text-neutral-500">Your email address will not be published. Required fields are marked *</p>
             </div>
-            <form action="{{route('comments') }}" method="POST" class="mt-4 w-4/6 p-8 bg-gray-300">
+            <form action="{{route('comments') }}" method="POST" class="mt-4 w-full lg:w-4/6 p-8 bg-gray-300">
                 @csrf
                 <input type="hidden" name="article_id" value="{{ $article->id }}" />
                 {{-- <input type="hidden" name="parent_id" value="{{ $comment->id }}" /> --}}

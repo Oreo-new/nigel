@@ -1,4 +1,4 @@
-<div aria-label="breadcrumb">
+<div aria-label="breadcrumb" class="hidden md:block"> 
     <ul class="breadcrumb flex mt-5">
       <li class="breadcrumb-item text-neutral-400 text-xs uppercase pr-2 relative">Home</li>
         @foreach($breadcrumbs as $breadcrumb)

@@ -7,8 +7,8 @@
             <div class="text-lg w-full intro">
                 {!! $page->full_text !!}
             </div>
-            <div class="flex mt-10">
-                <div class="w-1/2">
+            <div class="flex flex-wrap lg:flex-nowrap mt-10">
+                <div class="w-full lg:w-1/2">
                     @if($page->image)
                     <img class="mx-auto" src="{{ asset('storage/'.$page->image) }}" alt="Nigel Southway book - Take Back Manufaturing">
                     @endif
@@ -16,7 +16,7 @@
                     @if($page->page_icons)
                         <div class="mt-8">
                             <h4 class="text-2xl font-bold mb-5 text-center">Socials</h4>
-                            <div class="flex justify-center">
+                            <div class="flex justify-center mb-10 lg:mb-0">
                                 @foreach($page->page_icons as  $item)
                                     <a href="{{$item['url']}}" class="mr-3" target="_blank">
                                         <img class="w-[54px] h-[54px]" src="{{asset('storage/'.$item['icon'])}} " alt="Nigel Southway socials">
@@ -26,8 +26,8 @@
                         </div>
                     @endif
                 </div>
-                <div class="w-1/2">
-                    <form action="/contact-us" method="POST" id="contact" class="mt-4 w-4/6">
+                <div class="w-full lg:w-1/2">
+                    <form action="/contact-us" method="POST" id="contact" class="mt-4 w-4/6 mb-10 lg:mb-0">
                         @csrf
 
                         @if(session('success'))
@@ -75,7 +75,7 @@
         
                         {{-- Add Google reCAPTCHA here --}}
                         
-                        <button type="submit" class="bg-red-500 text-white p-2 rounded transition-colors hover:bg-red-700">Submit</button>
+                        <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded transition-colors hover:bg-red-700">Submit</button>
                     </form>
                 </div>
             </div>

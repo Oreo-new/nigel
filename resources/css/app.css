@@ -44,8 +44,14 @@ body {
   .navigation ul li svg {
     @apply text-red-600 mr-3;
   }
-  .navigation ul li.active {
-    @apply bg-red-600 text-white rounded font-bold;
+  .navigation-mobile ul li svg {
+    @apply text-white mr-3;
+  }
+  .navigation-mobile  ul li.active a span {
+    @apply text-white;
+  }
+  .navigation ul li.active, .navigation-mobile ul li.active {
+    @apply bg-red-600 text-white rounded font-bold md:pl-4;
   }
   .navigation ul li.active:hover a > span {
     @apply  text-white font-bold;
@@ -101,4 +107,7 @@ body {
  }
  .reply-form > button:hover > span, .reply-form > button:hover > svg {
   @apply hover:text-red-600 transition-colors;
+ }
+ body.stop {
+  overflow: hidden;
  }

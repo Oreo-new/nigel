@@ -30,7 +30,7 @@ class LatestArticle extends Component
 
         $groupedArticles = $sorted->groupBy(function($sort) {
             $date = Carbon::parse($sort->created_at);
-            return $date->format('Y-F');
+            return $date->format('Y-m');
         });
         $groupedArticles->all();
         
