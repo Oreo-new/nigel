@@ -23,6 +23,7 @@ class QuestionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';
     public static ?string $navigationLabel = 'Survey Questions';
     public static ?int $navigationSort = 9;
+    public static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {

@@ -16,7 +16,8 @@ class SurveyMonkeyController extends Controller
         $surveyMonkeyUrl = "https://api.surveymonkey.com/oauth/authorize";
         $clientId = env('SURVEYMONKEY_CLIENT_ID');
 
-        $redirectUri = route('survey-monkey-callback');
+        // $redirectUri = route('survey-monkey-callback');
+        $redirectUri = 'https://www.surveymonkey.com/tbm';
         $authorizationUrl = "$surveyMonkeyUrl?client_id=$clientId&redirect_uri=$redirectUri&response_type=code";
 
         return redirect($authorizationUrl);
@@ -25,7 +26,7 @@ class SurveyMonkeyController extends Controller
     public function handleSurveyMonkeyCallback(Request $request)
     {
         $code = $request->input('code');
-
+       
         // Exchange the code for an access token
         $tokenUrl = "https://api.surveymonkey.com/oauth/token";
         $clientId = env('SURVEYMONKEY_CLIENT_ID');
@@ -50,20 +51,8 @@ class SurveyMonkeyController extends Controller
     }
     public function getSurveys()
     {
-        // Make an API request to retrieve a list of surveys
-        $accessToken = 'aH53VJ63H0NmzlwgO-fYiz4HAn-lUW748wgHnsQoTijtqCEJZnjBb9fCqlU.8bRtBUCeJhfCGZPegxoHeODoAX9owjuowBfL9pl9eAnasTUTAi2waLn1DPcyBPueExLv'; // Replace with the actual access token
-        $url = "https://api.surveymonkey.com/v3/surveys";
-
-        $httpClient = new Client();
-        $response = $httpClient->get($url, [
-            'headers' => [
-                'Authorization' => "Bearer $accessToken",
-            ],
-        ]);
-        
-
-        $surveys = json_decode($response->getBody());
-
+       
+       
         $page = Page::where('slug', 'survey')->firstorFail();
 
         SEOTools::setTitle($page->meta_title);
@@ -73,7 +62,36 @@ class SurveyMonkeyController extends Controller
         
         
         return view('pages.surveymonkey')
-        ->with('page', $page)
-        ->with('surveys', $surveys);
+        ->with('page', $page);
+        // ->with('surveys', $surveys);
+    }
+    public function getSurveyQuestions(Request $request)
+    {
+        // Obtain the access token through your authentication process
+        $accessToken = 'MKGIdImxFYBgyHKOyrFs-LGmI2DASiMMb.2jxteLUO2LeIq6C-MRxeipOgLiz9QgmB4c85Or-n7AjIYREP5TPAwB5JmdF8nIDFS3sPr1JskmxxwhrAx2RH.X3jvznL5T';
+
+        // Replace 'your-survey-id' with the actual SurveyMonkey survey ID you want to retrieve questions from
+        $surveyId = '513531059';
+
+        $url = "https://api.surveymonkey.com/v3/surveys/$surveyId/details";
+
+        $httpClient = new Client();
+        $response = $httpClient->get($url, [
+            'headers' => [
+                'Authorization' => "Bearer $accessToken",
+            ],
+        ]);
+
+        $surveyData = json_decode($response->getBody());
+        dd( $surveyData );
+        // Extract the questions and pass them to the view
+        $questions = [];
+        foreach ($surveyData->data as $page) {
+            foreach ($page->questions as $question) {
+                $questions[] = $question->headings[0]->heading;
+            }
+        }
+       
+        return view('survey-questions', ['questions' => $questions]);
     }
 }

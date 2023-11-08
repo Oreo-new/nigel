@@ -12,8 +12,13 @@ use App\Models\PageArticle;
 use App\Models\Question;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SimplePie;
+use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PageController extends Controller
 {
@@ -218,10 +223,45 @@ class PageController extends Controller
 
         $news = DB::table('events');
         $allnews = $news->orderBy('created_at', 'desc')->paginate(5);
+
+
+        $rssFeedUrl = 'https://nigelsouthway.substack.com/feed';
+
+        $client = new Client([
+            'base_uri' => 'https://nigelsouthway.substack.com/',
+            'timeout'  => 2.0,
+            ]);
+          $response = $client->get('feed/');
+
+          
+          $data = $response->getBody()->getContents();
+
+
+          
+        try {
+            $response = Cache::remember('rss_feed', now()->addHours(10), function () use ($rssFeedUrl) {
+                return Http::get($rssFeedUrl)->body();
+            });
+
+            $feed = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $items = [];
+
+            foreach ($feed->channel->item as $item) {
+                $items[] = [
+                    'title' => (string) $item->title,
+                    'link' => (string) $item->link,
+                    'description' => (string) $item->description,
+                ];
+            }
+
+            return view('pages.news')
+            ->with('page', $page)
+            ->with('items', $items);
+
+        } catch (\Exception $e) {
+            throw new HttpException(500, 'Failed to fetch RSS feed');
+        }
         
-        return view('pages.news')
-        ->with('page', $page)
-        ->with('allnews', $allnews);
     }
     public function news1($slug) 
     {
