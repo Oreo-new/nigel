@@ -30,11 +30,11 @@ Route::get('/tbm-articles', [PageController::class, 'articles'])->name('tbm-arti
 Route::get('/tbm-articles/{slug}', [PageController::class, 'article'])->name('tbm-article');
 Route::get('/archived/{slug}', [PageController::class, 'archive'])->name('tbm-archive');
 Route::get('/news', [PageController::class, 'news'])->name('news');
-Route::get('/news/{slug}', [PageController::class, 'news1'])->name('news1');
+// Route::get('/news/{slug}', [PageController::class, 'news1'])->name('news1');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('/survey-monkey', [SurveyMonkeyController::class, 'redirectToSurveyMonkey']);
-Route::get('/survey-monkey/callback', [SurveyMonkeyController::class, 'handleSurveyMonkeyCallback'])->name('survey-monkey-callback');
+// Route::get('/survey-monkey', [SurveyMonkeyController::class, 'redirectToSurveyMonkey']);
+// Route::get('/survey-monkey/callback', [SurveyMonkeyController::class, 'handleSurveyMonkeyCallback'])->name('survey-monkey-callback');
 Route::get('/survey', [SurveyMonkeyController::class, 'getSurveys'])->name('surveys');
 
 Route::post('/comment', [CommentController::class, 'store'])->name('comments');
