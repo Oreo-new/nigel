@@ -245,12 +245,16 @@ class PageController extends Controller
 
             $feed = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
             $items = [];
+            
 
             foreach ($feed->channel->item as $item) {
+                // dd($item->enclosure->attributes()['url']);
                 $items[] = [
                     'title' => (string) $item->title,
                     'link' => (string) $item->link,
                     'description' => (string) $item->description,
+                    'date' =>  $item->pubDate,
+                    'img' => $item->enclosure->attributes()['url']
                 ];
             }
 
