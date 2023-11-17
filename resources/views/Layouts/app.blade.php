@@ -15,7 +15,7 @@
         
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-
+        <link rel="shortcut icon" href="{{ asset('/images/favicon.ico') }}">
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src='https://www.google.com/recaptcha/api.js'></script>

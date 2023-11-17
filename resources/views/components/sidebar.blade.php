@@ -1,10 +1,6 @@
 <div class="aside md:w-2/6 lg:w-1/5 border-r lg:my-5 hidden md:block">
-    <div class="author md:pt-8 lg:pt-8 flex flex-wrap pb-5 items-center">
-        <img src="{{ asset('images/nigel.webp') }}" alt="Nigel Southway" class="rounded-full border-red-600 border-2 md:w-[77px] md:height-[77px]  lg:w-[70px] lg:height-[70px]">
-        <div class="auhtor-desc pl-0  lg:pl-2 pr-4 md:mt-2 lg:mt-0">
-           <h2 class="uppercase font-bold text-xl"> <a href="/">Nigel Southway</a> </h2>
-           <span class="text-neutral-400 font-bold uppercase text-sm">Advocate / Author</span>
-        </div>
+    <div class="">
+        <a href="/" class="text-red-600 sans text-[100px] font-[800]">TBM</a>
     </div>
     <div class="navigation">
         <x-search />
@@ -52,12 +48,13 @@
     <!-- Your content here -->
     <div class="navigation-mobile mt-12">
 
-        <div class="author flex flex-wrap pb-5">
-            <img src="{{ asset('images/nigel.webp') }}" alt="Nigel Southway" class="rounded-full border-red-600 border-2 mx-auto">
+        <div class="author flex flex-wrap">
+            {{-- <img src="{{ asset('images/nigel.webp') }}" alt="Nigel Southway" class="rounded-full border-red-600 border-2 mx-auto">
             <div class="auhtor-desc w-full ">
                <h2 class="uppercase font-bold text-xl text-center"> <a href="/">Nigel Southway</a> </h2>
                <span class="text-black font-bold uppercase text-sm text-center w-full mx-auto block">Advocate / Author</span>
-            </div>
+            </div> --}}
+            <a href="/" class="text-red-600 sans text-[80px] font-[800] leading-none text-center w-full">TBM</a>
         </div>
 
         <div class="ml-4">
