@@ -29,8 +29,11 @@ Route::get('/tbm-articles', [PageController::class, 'articles'])->name('tbm-arti
 // Route::get('/survey', [PageController::class, 'survey'])->name('survey');
 Route::get('/tbm-articles/{slug}', [PageController::class, 'article'])->name('tbm-article');
 Route::get('/archived/{slug}', [PageController::class, 'archive'])->name('tbm-archive');
+
+Route::get('/tbm-on-substack', [PageController::class, 'substack'])->name('substack');
+
 Route::get('/news', [PageController::class, 'news'])->name('news');
-// Route::get('/news/{slug}', [PageController::class, 'news1'])->name('news1');
+Route::get('/news/{slug}', [PageController::class, 'news1'])->name('news1');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 // Route::get('/survey-monkey', [SurveyMonkeyController::class, 'redirectToSurveyMonkey']);

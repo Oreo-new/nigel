@@ -225,6 +225,26 @@ class PageController extends Controller
         $allnews = $news->orderBy('created_at', 'desc')->paginate(5);
 
 
+        return view('pages.news')
+        ->with('page', $page)
+        ->with('allnews', $allnews);
+
+        
+        
+    }
+
+    public function substack() 
+    {
+        $page = Page::where('slug', 'tbm-on-substack')->firstorFail();
+        SEOTools::setTitle($page->meta_title);
+        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::setCanonical(url()->current());
+
+        $news = DB::table('events');
+        $allnews = $news->orderBy('created_at', 'desc')->paginate(5);
+
+
         $rssFeedUrl = 'https://nigelsouthway.substack.com/feed';
 
         $client = new Client([
@@ -258,7 +278,7 @@ class PageController extends Controller
                 ];
             }
 
-            return view('pages.news')
+            return view('pages.substack')
             ->with('page', $page)
             ->with('items', $items);
 
@@ -267,6 +287,9 @@ class PageController extends Controller
         }
         
     }
+
+
+
     public function news1($slug) 
     {
         

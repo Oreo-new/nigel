@@ -25,7 +25,7 @@ class EventResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
     public static ?string $navigationLabel = 'News';
     public static ?int $navigationSort = 10;
-    public static bool $shouldRegisterNavigation = false;
+    // public static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {
