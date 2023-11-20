@@ -39,7 +39,7 @@ class DocumentResource extends Resource
                 ])->columns(2)->columnSpan('full'),
                 Grid::make()->schema([
                     Textarea::make('external_link')->label('external link for pdf'),
-                    FileUpload::make('pdf')->autofocus()->storeFileNamesIn('attachment_file_names')
+                    FileUpload::make('pdf')->autofocus()
                     ->acceptedFileTypes(['application/pdf'])->helperText('Please attach file here or Documents.'),
                     RichEditor::make('description'),
                 ])->columns(1)->columnSpan('full'),
