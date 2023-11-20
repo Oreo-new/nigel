@@ -66,7 +66,7 @@
                             <textarea name="message" id="message" rows="4" class="w-full border border-gray-300 p-2" required></textarea>
                         </div>
 
-                        {{-- <div class="g-recaptcha mt-6 mb-6" data-sitekey="6LcXrcYoAAAAAL-yKmkaGAmTE-XN16y7ySceYbhc"></div> --}}
+                        <div class="g-recaptcha mt-6 mb-6" data-sitekey="6LcXrcYoAAAAAL-yKmkaGAmTE-XN16y7ySceYbhc"></div>
                         @if($errors->has('g-recaptcha-response')) 
                         <p class="mt-2 text-sm text-red-500">
                             {{ $errors->first('g-recaptcha-response') }}
