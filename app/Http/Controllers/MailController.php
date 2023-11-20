@@ -25,7 +25,7 @@ class MailController extends Controller
         ]);
 
         $input = $request->all();
-        Mail::to('clintscopy@gmail.com')->send(new MailNotification($input));
+        Mail::to('nsouthway@bell.net')->send(new MailNotification($input));
 
         return redirect()->back()->with(['success' => 'Thank you for contacting us']);
     }
