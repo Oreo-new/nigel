@@ -9,7 +9,7 @@ return [
          * The default configurations to be used by the meta generator.
          */
         'defaults'       => [
-            'title'        => "Tack Back Manufacturing", // set false to total remove
+            'title'        => "Take Back Manufacturing", // set false to total remove
             'titleBefore'  => true, // Put defaults.title before page title, like 'It's Over 9000! - Dashboard'
             'description'  => 'This book is about how in less than one lifetime we have experienced the destruction of the manufacturing sectors in our western societies. and the significant loss of national prosperity, and why the imperative for western economies must be to ….Take Back Manufacturing!', // set false to total remove
             'separator'    => ' - ',
