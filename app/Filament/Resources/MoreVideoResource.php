@@ -17,6 +17,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns;
+use Filament\Tables\Columns\TextColumn;
 
 class MoreVideoResource extends Resource
 {
@@ -37,6 +38,7 @@ class MoreVideoResource extends Resource
                     Textarea::make('video_link')->rows(5)->cols(10)->required()
                     ->helperText('Please put the embed code for your video'),
                     RichEditor::make('description')->nullable(),
+                    TextInput::make('order')->nullable()->numeric(),
                 ])->columns(1)
                         
             ]);
@@ -46,8 +48,13 @@ class MoreVideoResource extends Resource
     {
         return $table
             ->columns([
-                Columns\TextColumn::make('title'),
-                Columns\TextColumn::make('slug'),
+                TextColumn::make('order')->searchable()
+                ->sortable(query: function (Builder $query, string $direction): Builder {
+                    return $query
+                        ->orderBy('order', 'asc');
+                }),
+                TextColumn::make('title')->sortable(),
+                TextColumn::make('slug'),
             ])
             ->filters([
                 //

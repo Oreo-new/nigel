@@ -43,7 +43,9 @@ class ArticleResource extends Resource
                 RichEditor::make('full_text')->nullable(),
                 FileUpload::make('image')->autofocus()
                 ->image()->nullable(),
-                Hidden::make('user_id')->default(Auth::user()->id)->disabledOn('edit')
+                Hidden::make('user_id')->default(Auth::user()->id)->disabledOn('edit'),
+
+                TextInput::make('order')->nullable()->numeric(),
             ])->columns(1)->columnSpan('full'),
         ]);
     }
@@ -52,6 +54,11 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('order')->searchable()
+                ->sortable(query: function (Builder $query, string $direction): Builder {
+                    return $query
+                        ->orderBy('order', 'asc');
+                }),
                 TextColumn::make('title')->searchable()->sortable(),
                 TextColumn::make('user.name')->label('Author')->sortable(),
             ])

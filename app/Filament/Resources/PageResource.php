@@ -20,6 +20,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
 use PhpParser\Node\Stmt\Label;
 
 class PageResource extends Resource
@@ -47,7 +48,7 @@ class PageResource extends Resource
                             
                             RichEditor::make('full_text')->nullable(),
                             FileUpload::make('image')->nullable()->label('Upload Image'),
-                            TextInput::make('video_link')->nullable(),
+                            Textarea::make('video_link')->rows(5)->cols(10)->nullable(),
                             Grid::make()->schema([
                                 Repeater::make('links')
                                 ->schema([

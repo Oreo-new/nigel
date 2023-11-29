@@ -72,7 +72,8 @@ class PageController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
-        $videos = MoreVideo::all();
+        $videos = MoreVideo::orderBy('order', 'asc')->get();
+        
         return view('pages.more-videos')
             ->with('page', $page)
             ->with('videos', $videos);
@@ -140,11 +141,13 @@ class PageController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
-        $articles = DB::table('articles');
-        $latest = $articles->latest()->take(5)->get();
-        $sortedArticles = $articles->join('users', 'articles.user_id', '=', 'users.id')
+        $latest = Article::latest()->take(5)->get();
+
+        $sortedArticles = Article::join('users', 'articles.user_id', '=', 'users.id')
         ->select('articles.*', 'users.name as user_name')
-        ->orderBy('created_at', 'desc')->paginate(5);
+        ->orderBy('order', 'asc')
+        ->paginate(5);
+        
 
         return view('pages.articles')
         ->with('page', $page)
