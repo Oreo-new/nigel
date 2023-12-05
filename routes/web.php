@@ -41,6 +41,7 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/survey', [SurveyMonkeyController::class, 'getSurveys'])->name('surveys');
 
 Route::post('/comment', [CommentController::class, 'store'])->name('comments');
+Route::post('/newscomment', [CommentController::class, 'store2'])->name('newscomments');
 
 Route::get('/introduction-video', [PageController::class, 'intro'])->name('intro');
 Route::get('/{slug}', [PageController::class, 'page'])->name('subpage');

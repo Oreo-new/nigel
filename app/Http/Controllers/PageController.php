@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Document;
 use App\Models\Event;
+use App\Models\EventComment;
 use App\Models\MoreVideo;
 use App\Models\Page;
 use App\Models\PageArticle;
@@ -227,7 +228,7 @@ class PageController extends Controller
         $news = DB::table('events');
         $allnews = $news->orderBy('created_at', 'desc')->paginate(5);
 
-
+        
         return view('pages.news')
         ->with('page', $page)
         ->with('allnews', $allnews);
@@ -300,8 +301,15 @@ class PageController extends Controller
         SEOTools::setTitle($article->title);
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
+
+        $comments = EventComment::where('event_id', $article->id)
+        ->whereNull('parent_id')
+        ->with('replies')
+        ->orderBy('created_at', 'asc')
+        ->get();
         
-        return view('pages.singlenews')->with('article', $article);
+        return view('pages.singlenews')->with('article', $article)
+        ->with('comments', $comments);
     }
 
  }
