@@ -33,6 +33,20 @@ Route::get('/archived/{slug}', [PageController::class, 'archive'])->name('tbm-ar
 Route::get('/tbm-on-substack', [PageController::class, 'substack'])->name('substack');
 
 Route::get('/news', [PageController::class, 'news'])->name('news');
+// Temporary: remove after fixing 500. Visit /news-debug to see the actual error.
+Route::get('/news-debug', function () {
+    try {
+        $response = app()->call([PageController::class, 'news']);
+        $response->getContent(); // trigger view render so we catch view errors too
+        return $response;
+    } catch (\Throwable $e) {
+        return response(
+            $e->getMessage() . "\n\n" . $e->getFile() . ':' . $e->getLine() . "\n\n" . $e->getTraceAsString(),
+            500,
+            ['Content-Type' => 'text/plain; charset=utf-8']
+        );
+    }
+});
 Route::get('/news/{slug}', [PageController::class, 'news1'])->name('news1');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
