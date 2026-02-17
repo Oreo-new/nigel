@@ -67,9 +67,17 @@ class PageController extends Controller
             abort(404);
         }
 
-        $page = Page::where('slug', $slug)->firstorFail();
+        try {
+            $page = Page::where('slug', $slug)->first();
+            if (!$page) {
+                abort(404);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error fetching page: ' . $e->getMessage());
+            abort(404);
+        }
 
-        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setTitle($page->meta_title ?? $page->title ?? 'Page');
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());

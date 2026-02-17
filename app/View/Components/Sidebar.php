@@ -22,7 +22,12 @@ class Sidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        $menus = Menu::all()->sortBy("order");
+        try {
+            $menus = Menu::all()->sortBy("order");
+        } catch (\Exception $e) {
+            \Log::error('Error fetching menus: ' . $e->getMessage());
+            $menus = collect([]);
+        }
         return view('components.sidebar')->with('menus', $menus);
     }
 }
