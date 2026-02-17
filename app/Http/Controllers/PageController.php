@@ -25,7 +25,7 @@ class PageController extends Controller
 {
     public function home() 
     {
-        $page = Page::where('slug', 'home')->firstorFail();
+        $page = Page::where('slug', 'home')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
@@ -38,7 +38,7 @@ class PageController extends Controller
     }
     public function intro()
     {
-        $page = Page::where('slug', 'introduction-video')->firstorFail();
+        $page = Page::where('slug', 'introduction-video')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
@@ -87,7 +87,7 @@ class PageController extends Controller
     }
     public function more() 
     {
-        $page = Page::where('slug', 'more-videos')->firstorFail();
+        $page = Page::where('slug', 'more-videos')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
@@ -102,7 +102,7 @@ class PageController extends Controller
     }
     public function documents() 
     {
-        $page = Page::where('slug', 'documents')->firstorFail();
+        $page = Page::where('slug', 'documents')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
@@ -116,7 +116,7 @@ class PageController extends Controller
     }
     public function about() 
     {
-        $page = Page::where('slug', 'about-the-author')->firstorFail();
+        $page = Page::where('slug', 'about-the-author')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
@@ -134,7 +134,7 @@ class PageController extends Controller
     }
     public function ordering() 
     {
-        $page = Page::where('slug', 'book-ordering')->firstorFail();
+        $page = Page::where('slug', 'book-ordering')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
@@ -152,7 +152,7 @@ class PageController extends Controller
     }
     public function contact() 
     {
-        $page = Page::where('slug', 'contact')->firstorFail();
+        $page = Page::where('slug', 'contact')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
@@ -164,7 +164,7 @@ class PageController extends Controller
     }
     public function articles() 
     {
-        $page = Page::where('slug', 'tbm-articles')->firstorFail();
+        $page = Page::where('slug', 'tbm-articles')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
@@ -251,7 +251,7 @@ class PageController extends Controller
     }
     public function survey() 
     {
-        $page = Page::where('slug', 'survey')->firstorFail();
+        $page = Page::where('slug', 'survey')->firstOrFail();
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
@@ -306,7 +306,7 @@ class PageController extends Controller
 
     public function substack() 
     {
-        $page = Page::where('slug', 'tbm-on-substack')->firstorFail();
+        $page = Page::where('slug', 'tbm-on-substack')->firstOrFail();
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
@@ -358,7 +358,7 @@ class PageController extends Controller
     public function news1($slug) 
     {
         
-        $article = Event::where('slug', $slug)->firstorFail();
+        $article = Event::where('slug', $slug)->firstOrFail();
         SEOTools::setTitle($article->title);
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());

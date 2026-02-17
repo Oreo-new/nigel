@@ -53,7 +53,7 @@ class SurveyMonkeyController extends Controller
     {
        
        
-        $page = Page::where('slug', 'survey')->firstorFail();
+        $page = Page::where('slug', 'survey')->firstOrFail();
 
         SEOTools::setTitle($page->meta_title ?? $page->title);
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
