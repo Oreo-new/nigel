@@ -103,6 +103,10 @@ class PageController extends Controller
         SEOTools::setCanonical(url()->current());
 
         $document = $page->pageArticle()->first();
+        if (!$document) {
+            abort(404);
+        }
+        
         return view('pages.about')
             ->with('page', $page)
             ->with('document', $document);
@@ -117,6 +121,10 @@ class PageController extends Controller
         SEOTools::setCanonical(url()->current());
 
         $document = $page->pageArticle()->first();
+        if (!$document) {
+            abort(404);
+        }
+        
         return view('pages.ordering')
             ->with('page', $page)
             ->with('document', $document);
@@ -164,6 +172,10 @@ class PageController extends Controller
         ->select('articles.*', 'users.name as author_name', 'users.email as author_email')
         ->first();
 
+        if (!$article) {
+            abort(404);
+        }
+
         SEOTools::setTitle($article->title);
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
@@ -183,10 +195,24 @@ class PageController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
-        list($month, $year) = explode('-', $slug);
+        $slugParts = explode('-', $slug);
+        if (count($slugParts) < 2) {
+            abort(404);
+        }
 
-        $parsedDate = Carbon::create($year, $month, 1);
-        $date = $parsedDate->format('Y-F');
+        $month = $slugParts[0];
+        $year = $slugParts[1];
+
+        if (!is_numeric($month) || !is_numeric($year) || $month < 1 || $month > 12) {
+            abort(404);
+        }
+
+        try {
+            $parsedDate = Carbon::create($year, $month, 1);
+            $date = $parsedDate->format('Y-F');
+        } catch (\Exception $e) {
+            abort(404);
+        }
 
         $articles = DB::table('articles');
         
@@ -245,41 +271,31 @@ class PageController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
-        $news = DB::table('events');
-        $allnews = $news->orderBy('created_at', 'desc')->paginate(5);
-
-
         $rssFeedUrl = 'https://nigelsouthway.substack.com/feed';
+        $items = [];
 
-        $client = new Client([
-            'base_uri' => 'https://nigelsouthway.substack.com/',
-            'timeout'  => 2.0,
-            ]);
-          $response = $client->get('feed/');
-
-          
-          $data = $response->getBody()->getContents();
-
-
-          
         try {
             $response = Cache::remember('rss_feed', now()->addHours(10), function () use ($rssFeedUrl) {
                 return Http::get($rssFeedUrl)->body();
             });
 
             $feed = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $items = [];
             
-
-            foreach ($feed->channel->item as $item) {
-                // dd($item->enclosure->attributes()['url']);
-                $items[] = [
-                    'title' => (string) $item->title,
-                    'link' => (string) $item->link,
-                    'description' => (string) $item->description,
-                    'date' =>  $item->pubDate,
-                    'img' => $item->enclosure->attributes()['url']
-                ];
+            if ($feed && isset($feed->channel) && isset($feed->channel->item)) {
+                foreach ($feed->channel->item as $item) {
+                    $img = null;
+                    if (isset($item->enclosure) && isset($item->enclosure->attributes()['url'])) {
+                        $img = (string) $item->enclosure->attributes()['url'];
+                    }
+                    
+                    $items[] = [
+                        'title' => (string) $item->title,
+                        'link' => (string) $item->link,
+                        'description' => (string) $item->description,
+                        'date' => isset($item->pubDate) ? (string) $item->pubDate : '',
+                        'img' => $img
+                    ];
+                }
             }
 
             return view('pages.substack')
@@ -287,7 +303,11 @@ class PageController extends Controller
             ->with('items', $items);
 
         } catch (\Exception $e) {
-            throw new HttpException(500, 'Failed to fetch RSS feed');
+            // Log the error but don't throw 500 - return empty items instead
+            \Log::error('Failed to fetch RSS feed: ' . $e->getMessage());
+            return view('pages.substack')
+            ->with('page', $page)
+            ->with('items', []);
         }
         
     }

@@ -1,4 +1,4 @@
-<?
+<?php
 
 function bodyClass() {
 	$body_classes = array();
