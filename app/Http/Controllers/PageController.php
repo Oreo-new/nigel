@@ -244,8 +244,8 @@ class PageController extends Controller
     public function survey() 
     {
         $page = Page::where('slug', 'survey')->firstorFail();
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -264,8 +264,19 @@ class PageController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
-        $news = DB::table('events');
-        $allnews = $news->orderBy('created_at', 'desc')->paginate(5);
+        try {
+            $allnews = Event::orderBy('created_at', 'desc')->paginate(5);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching news: ' . $e->getMessage());
+            // Return empty paginator if there's an error
+            $allnews = new \Illuminate\Pagination\LengthAwarePaginator(
+                collect([]),
+                0,
+                5,
+                1,
+                ['path' => request()->url(), 'pageName' => 'page']
+            );
+        }
 
         
         return view('pages.news')
