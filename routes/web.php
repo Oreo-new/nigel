@@ -44,6 +44,12 @@ Route::post('/comment', [CommentController::class, 'store'])->name('comments');
 Route::post('/newscomment', [CommentController::class, 'store2'])->name('newscomments');
 
 Route::get('/introduction-video', [PageController::class, 'intro'])->name('intro');
+
+// Block known malicious/scraping patterns - must be before catch-all route
+Route::get('/prize/{any}', function () {
+    abort(404);
+})->where('any', '.*')->name('block-prize');
+
 Route::get('/{slug}', [PageController::class, 'page'])->name('subpage');
 
 Route::post('/contact-us', [ MailController::class , 'submitForm' ] )->name('contact-us');

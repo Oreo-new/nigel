@@ -55,8 +55,8 @@ class SurveyMonkeyController extends Controller
        
         $page = Page::where('slug', 'survey')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
         

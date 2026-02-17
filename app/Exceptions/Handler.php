@@ -26,5 +26,13 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        // Convert ModelNotFoundException to 404 instead of 500
+        $this->renderable(function (\Illuminate\Database\Eloquent\ModelNotFoundException $e, $request) {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Not Found'], 404);
+            }
+            abort(404);
+        });
     }
 }

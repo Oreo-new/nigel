@@ -27,8 +27,8 @@ class PageController extends Controller
     {
         $page = Page::where('slug', 'home')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -40,8 +40,8 @@ class PageController extends Controller
     {
         $page = Page::where('slug', 'introduction-video')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -54,10 +54,23 @@ class PageController extends Controller
             return abort(404);
         }
 
+        // Block suspicious patterns that might be from scrapers/hackers
+        $suspiciousPatterns = ['prize', 'admin', 'wp-', 'wp-admin', 'phpmyadmin', 'xmlrpc', '.php', '.env', 'config', 'backup'];
+        foreach ($suspiciousPatterns as $pattern) {
+            if (stripos($slug, $pattern) !== false) {
+                abort(404);
+            }
+        }
+
+        // Validate slug format - should not contain slashes or special characters
+        if (preg_match('/[\/\\\\<>"\']/', $slug)) {
+            abort(404);
+        }
+
         $page = Page::where('slug', $slug)->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -68,8 +81,8 @@ class PageController extends Controller
     {
         $page = Page::where('slug', 'more-videos')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -83,8 +96,8 @@ class PageController extends Controller
     {
         $page = Page::where('slug', 'documents')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -97,8 +110,8 @@ class PageController extends Controller
     {
         $page = Page::where('slug', 'about-the-author')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -115,8 +128,8 @@ class PageController extends Controller
     {
         $page = Page::where('slug', 'book-ordering')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -133,8 +146,8 @@ class PageController extends Controller
     {
         $page = Page::where('slug', 'contact')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -145,8 +158,8 @@ class PageController extends Controller
     {
         $page = Page::where('slug', 'tbm-articles')->firstorFail();
 
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -246,8 +259,8 @@ class PageController extends Controller
     public function news() 
     {
         $page = Page::where('slug', 'news')->firstorFail();
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
@@ -266,8 +279,8 @@ class PageController extends Controller
     public function substack() 
     {
         $page = Page::where('slug', 'tbm-on-substack')->firstorFail();
-        SEOTools::setTitle($page->meta_title);
-        SEOTools::setDescription(strip_tags($page->meta_description));
+        SEOTools::setTitle($page->meta_title ?? $page->title);
+        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
