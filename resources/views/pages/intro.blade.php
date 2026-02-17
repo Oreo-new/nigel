@@ -14,12 +14,3 @@
         </div>
     </div>
 </x-app-layout>
-<script>
-    // Get a reference to all iframes within elements with the class "videowrap"
-    var iframes = document.querySelectorAll('.videoWrapper iframe');
-  
-    // Loop through the selected iframes and set their width and height to "100%"
-    for (var i = 0; i < iframes.length; i++) {
-      iframes[i].width = "100%";
-    }
-</script>
