@@ -271,21 +271,20 @@ class PageController extends Controller
             if (!$page) {
                 abort(404);
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             \Log::error('Error fetching news page: ' . $e->getMessage());
             abort(404);
         }
 
-        SEOTools::setTitle($page->meta_title ?? $page->title ?? 'News');
-        SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
+        SEOTools::setTitle((string) ($page->meta_title ?? $page->title ?? 'News'));
+        SEOTools::setDescription(strip_tags((string) ($page->meta_description ?? '')));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
 
         try {
             $allnews = Event::orderBy('created_at', 'desc')->paginate(5);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             \Log::error('Error fetching news events: ' . $e->getMessage());
-            // Return empty paginator if there's an error
             $allnews = new \Illuminate\Pagination\LengthAwarePaginator(
                 collect([]),
                 0,
@@ -295,13 +294,9 @@ class PageController extends Controller
             );
         }
 
-        
         return view('pages.news')
-        ->with('page', $page)
-        ->with('allnews', $allnews);
-
-        
-        
+            ->with('page', $page)
+            ->with('allnews', $allnews);
     }
 
     public function substack() 
