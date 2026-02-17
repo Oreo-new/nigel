@@ -3,9 +3,9 @@
         <x-header />
        
         <div class="main pt-6">
-            <h1 class="text-2xl font-semibold">{{$page->title}}</h1>
+            <h1 class="text-2xl font-semibold">{{$page->title ?? 'News'}}</h1>
             <div class="text-lg w-full intro">
-                {!! $page->full_text !!}
+                {!! $page->full_text ?? '' !!}
             </div>
             
             <div class="mt-10 w-full flex">

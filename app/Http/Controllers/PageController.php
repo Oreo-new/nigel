@@ -258,8 +258,17 @@ class PageController extends Controller
 
     public function news() 
     {
-        $page = Page::where('slug', 'news')->firstorFail();
-        SEOTools::setTitle($page->meta_title ?? $page->title);
+        try {
+            $page = Page::where('slug', 'news')->first();
+            if (!$page) {
+                abort(404);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error fetching news page: ' . $e->getMessage());
+            abort(404);
+        }
+
+        SEOTools::setTitle($page->meta_title ?? $page->title ?? 'News');
         SEOTools::setDescription(strip_tags($page->meta_description ?? ''));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
@@ -267,7 +276,7 @@ class PageController extends Controller
         try {
             $allnews = Event::orderBy('created_at', 'desc')->paginate(5);
         } catch (\Exception $e) {
-            \Log::error('Error fetching news: ' . $e->getMessage());
+            \Log::error('Error fetching news events: ' . $e->getMessage());
             // Return empty paginator if there's an error
             $allnews = new \Illuminate\Pagination\LengthAwarePaginator(
                 collect([]),
