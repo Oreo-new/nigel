@@ -25,7 +25,7 @@ class MailController extends Controller
         ]);
 
         $input = $request->all();
-        Mail::to('clintscopy@gmail.com')->send(new MailNotification($input));
+        Mail::to('nsouthway@bell.net')->send(new MailNotification($input));
         // nsouthway@bell.net
 
         return redirect()->back()->with(['success' => 'Thank you for contacting us']);
@@ -45,7 +45,7 @@ class MailController extends Controller
         $allQuestion = $questions->toArray();
         $alldata = array_merge($allQuestion, $input);
         
-        Mail::to('clintscopy@gmail.com')->send(new MailSurvey($alldata));
+        Mail::to('nsouthway@bell.net')->send(new MailSurvey($alldata));
         return redirect()->back()->with(['success' => 'Thank you for taking the survey']);
     }
 }
